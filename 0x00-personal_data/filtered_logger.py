@@ -127,9 +127,9 @@ def main():
     logger = get_logger()
 
     for row in rows:
-        message = '; '.join([f"{field}={value}" for field, value in row.items()])
+        msg = '; '.join([f"{field}={value}" for field, value in row.items()])
         logger.info(filter_datum(PII_FIELDS, RedactingFormatter.REDACTION,
-                                 message, RedactingFormatter.SEPARATOR))
+                                 msg, RedactingFormatter.SEPARATOR))
 
 
 if __name__ == "__main__":
