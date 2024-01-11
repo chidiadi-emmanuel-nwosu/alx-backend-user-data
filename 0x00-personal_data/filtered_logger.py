@@ -67,7 +67,7 @@ def filter_datum(fields: List[str], redaction: str,
     Returns:
         str: The log message with specified fields redacted.
     """
-    return re.sub(r'({})=[^{}]+'.format('|'.join(fields), re.escape(separator)),
+    return re.sub(r'({})=[^{}]+'.format('|'.join(fields), separator),
                   r'\1={}'.format(redaction), message)
 
 
