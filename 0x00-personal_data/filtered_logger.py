@@ -112,3 +112,25 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             port=3306,
             database=db_name
             )
+
+
+def main():
+    """
+    Obtain a database connection, retrieve all rows from the 'users' table,
+    and display each row in a filtered format. Print a list of filtered fields.
+    """
+    db_connection = get_db()
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+
+    logger = get_logger()
+
+    for row in rows:
+        message = '; '.join([f"{field}={value}" for field, value in row.items()])
+        logger.info(filter_datum(PII_FIELDS, RedactingFormatter.REDACTION,
+                                 message, RedactingFormatter.SEPARATOR))
+
+
+if __name__ == "__main__":
+    main()
