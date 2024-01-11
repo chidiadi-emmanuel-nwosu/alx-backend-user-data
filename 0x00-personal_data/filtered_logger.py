@@ -105,17 +105,9 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
     db_name = os.getenv("PERSONAL_DATA_DB_NAME")
 
-    if not db_name:
-        raise ValueError("PERSONAL_DATA_DB_NAME env variable is not set.")
-
-    try:
-        connection = mysql.connector.connect(
+    return mysql.connector.connect(
             user=db_username,
             password=db_password,
             host=db_host,
             database=db_name
-        )
-        return connection
-    except mysql.connector.Error as err:
-        print(f"Error: {err}")
-        raise
+            )
