@@ -2,11 +2,11 @@
 """
 filtered_logger: A module for logging with data redaction functionality.
 """
+import os
 import re
 import logging
 from typing import List
 import mysql.connector
-from os import getenv
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -98,8 +98,8 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     Returns a connector to the MySQL database.
     """
     return mysql.connector.connect(
-        user=getenv("PERSONAL_DATA_DB_USERNAME"),
-        password=getenv("PERSONAL_DATA_DB_PASSWORD"),
-        host=getenv("PERSONAL_DATA_DB_HOST"),
-        database=getenv("PERSONAL_DATA_DB_NAME")
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD"),
+        host=os.getenv("PERSONAL_DATA_DB_HOST"),
+        database=os.getenv("PERSONAL_DATA_DB_NAME")
     )
