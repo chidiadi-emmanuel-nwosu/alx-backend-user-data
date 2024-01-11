@@ -4,17 +4,16 @@ filtered_logger
 """
 import re
 import logging
-from typing import List
+from typing import List, Iterable
 
 
-PII_FIELDS = ['name', 'email', 'ssn', 'password', 'ip']
+PII_FIELDS = ('name', 'email', 'ssn', 'password', 'ip')
 
 
 def filter_datum(fields: List, redaction: str, message: str, separator: str) -> str:
     """ Obfuscates specific fields within a log message. """
-    for i in fields:
-        message = re.sub(f"{i}=.*?{separator}", f"{i}={redaction}{separator}", message)
-    return message
+    return re.sub(fr'({"|".join(map(re.escape, fields))})=[^{re.escape(separator)}]+',
+                  fr'\1={redaction}', message)
 
 
 class RedactingFormatter(logging.Formatter):
