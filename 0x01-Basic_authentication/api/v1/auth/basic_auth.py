@@ -93,12 +93,12 @@ class BasicAuth(Auth):
             The user object if credentials are valid, otherwise None.
         """
         if (
-            not user_email or type(user_email) is not str
-            or not user_pwd or type(user_pwd) is not str
+            not isinstance(user_email, str)
+            or not isinstance(user_pwd, str)
         ):
             return None
 
-        if User.count():
+        if User.count() != 0:
             users = User.search({'email': user_email})
             if users:
                 for user in users:
