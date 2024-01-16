@@ -77,9 +77,9 @@ class BasicAuth(Auth):
         ):
             return None, None
 
-        user_email, user_pwd = decoded_base64_authorization_header.split(':', 1)
+        usr_email, usr_pwd = decoded_base64_authorization_header.split(':', 1)
 
-        return user_email, user_pwd
+        return usr_email, usr_pwd
 
     def user_object_from_credentials(
             self, user_email: str, user_pwd: str) -> TypeVar('User'):
