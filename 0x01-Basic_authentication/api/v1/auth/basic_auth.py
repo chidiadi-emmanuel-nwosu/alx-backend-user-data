@@ -87,20 +87,22 @@ class BasicAuth(Auth):
         """Get a user object based on provided email and password credentials.
 
         Args:
-            user_email (str): The user's email.
-            user_pwd (str): The user's password.
+            user_email: The user's email.
+            user_pwd: The user's password.
 
         Returns:
-            TypeVar('User'): The user object if credentials are valid, otherwise None.
+            The user object if credentials are valid, otherwise None.
         """
-        if not user_email or not user_pwd:
+        if (not isinstance(user_email, str)
+            or not isinstance(user_pwd, str)):
             return None
 
         if User.count():
             users = User.search({'email': user_email})
-            for user in users:
-                if user.is_valid_password(user_pwd):
-                    return user
-            return None
+            if users:
+                for user in users:
+                    if user.is_valid_password(user_pwd):
+                        return user
+                return None
 
         return None
