@@ -19,10 +19,15 @@ class Auth:
         """
         if not path or not excluded_paths:
             return True
-        if not path.endswith('/'):
-            path += '/'
 
-        return path not in excluded_paths
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('*'):
+                if path.startswith(excluded_path[:-1]):
+                    return False
+            elif excluded_path in (path, path + '/'):
+                return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Extract the Authorization header from the provided Flask request.
