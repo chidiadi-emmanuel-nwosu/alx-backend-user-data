@@ -83,27 +83,48 @@ class BasicAuth(Auth):
 
     def user_object_from_credentials(
             self, user_email: str, user_pwd: str) -> TypeVar('User'):
-        """Get a user object based on provided email and password credentials.
+        """ Get the User instance based on the provided
+            email and password credentials.
 
         Args:
             user_email: The user's email.
             user_pwd: The user's password.
 
         Returns:
-            The user object if credentials are valid, otherwise None.
+            The User instance if credentials are valid, otherwise None.
         """
-        if (
-            not isinstance(user_email, str)
-            or not isinstance(user_pwd, str)
-        ):
+        if user_email is None or not isinstance(user_email, str):
             return None
 
-        if User.count() != 0:
-            users = User.search({'email': user_email})
-            if users:
-                for user in users:
-                    if user.is_valid_password(user_pwd):
-                        return user
-                return None
+        if user_pwd is None or not isinstance(user_pwd, str):
+            return None
+
+        users = User.search({'email': user_email})
+
+        if not users:
+            return None
+
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
 
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Retrieve the User instance for a given request.
+
+        Args:
+            request: The Flask request object. Defaults to None.
+
+        Returns:
+            The User instance if authentication is successful, otherwise None.
+        """
+        header = self.authorization_header(request)
+
+        decoded = self.decode_base64_authorization_header(header)
+
+        user_email, user_password = self.extract_user_credentials(decoded)
+
+        user = self.user_object_from_credentials(user_email, user_password)
+
+        return user
