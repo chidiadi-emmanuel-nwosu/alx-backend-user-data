@@ -6,7 +6,6 @@ from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
-import os
 
 
 app = Flask(__name__)
@@ -54,8 +53,7 @@ def before_request():
 
     if not auth.current_user(request):
         abort(403)
-    else:
-        request.current_user = auth.current_user(request)
+    request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(404)
