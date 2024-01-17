@@ -18,15 +18,15 @@ def login() -> Union[Response, tuple[Response, int]]:
     user_pwd = request.form.get('password')
 
     if not user_email:
-        return jsonify({ "error": "email missing" }), 400
+        return jsonify({"error": "email missing"}), 400
 
     if not user_pwd:
-        return jsonify({ "error": "password missing" }), 400
+        return jsonify({"error": "password missing"}), 400
 
     users = User.search({'email': user_email})
 
     if not users:
-        return jsonify({ "error": "no user found for this email" }), 400
+        return jsonify({"error": "no user found for this email"}), 400
 
     for user in users:
         if user.is_valid_password(user_pwd):
@@ -38,10 +38,11 @@ def login() -> Union[Response, tuple[Response, int]]:
 
             return response
 
-    return jsonify({ "error": "wrong password" }), 401
+    return jsonify({"error": "wrong password"}), 401
 
 
-@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
 def logout() -> Union[Response, tuple[Response, int]]:
     """ DELETE /auth_session/logout
     Return:

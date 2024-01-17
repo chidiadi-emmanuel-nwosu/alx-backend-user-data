@@ -42,7 +42,7 @@ class SessionExpAuth(SessionAuth):
 
         return session_id
 
-    def user_id_for_session_id(self, session_id: str = None) -> Union[str, None]:
+    def user_id_for_session_id(self, session_id: str = None) -> str:
         """ Get the User ID associated with the given Session ID.
 
         Args:
