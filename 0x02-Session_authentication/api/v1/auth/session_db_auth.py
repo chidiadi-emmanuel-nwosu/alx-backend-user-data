@@ -27,7 +27,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         kwargs = self.user_id_by_session_id.get(session_id)
-        user_session = UserSession(kwargs)
+        user_session = UserSession(**kwargs)
         user_session.save()
 
         return session_id
