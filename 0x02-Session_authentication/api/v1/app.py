@@ -26,7 +26,9 @@ elif auth_type == 'session_auth':
     auth = SessionAuth()
 elif auth_type == 'session_db_auth':
     from api.v1.auth.session_db_auth import SessionDBAuth
+    from models.user_session import UserSession
     auth = SessionDBAuth()
+    UserSession.load_from_file()
 elif auth_type == 'session_exp_auth':
     from api.v1.auth.session_exp_auth import SessionExpAuth
     auth = SessionExpAuth()
