@@ -22,6 +22,7 @@ class SessionDBAuth(SessionExpAuth):
         Returns:
           - The generated Session ID, None if not created
         """
+        UserSession.load_from_file()
         session_id = super().create_session(user_id)
         if not session_id:
             return None
