@@ -47,6 +47,7 @@ class SessionDBAuth(SessionExpAuth):
         if not isinstance(session_id, str):
             return None
 
+        UserSession.load_from_file()
         session_dict = UserSession.search({'session_id': session_id})
         if not session_dict:
             return None
@@ -82,6 +83,7 @@ class SessionDBAuth(SessionExpAuth):
 
         session_id = self.session_cookie(request)
 
+        UserSession.load_from_file()
         session_dict = UserSession.search({'session_id': session_id})
         if not session_dict:
             return False
