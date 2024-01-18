@@ -2,14 +2,13 @@
 """ Module of SessionAuth views
 """
 from os import getenv
-from flask import abort, jsonify, request, Response
-from typing import Union
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models.user import User
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def login() -> Union[Response, tuple[Response, int]]:
+def login() -> str:
     """ POST /auth_session/login
     Return:
       - enables user login
@@ -43,7 +42,7 @@ def login() -> Union[Response, tuple[Response, int]]:
 
 @app_views.route('/auth_session/logout',
                  methods=['DELETE'], strict_slashes=False)
-def logout() -> Union[Response, tuple[Response, int]]:
+def logout() -> str:
     """ DELETE /auth_session/logout
     Return:
       - logs out user
