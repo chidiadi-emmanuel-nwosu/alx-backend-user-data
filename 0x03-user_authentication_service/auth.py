@@ -2,7 +2,6 @@
 """auth module
 """
 from uuid import uuid4
-from typing import Union
 from sqlalchemy.orm.exc import NoResultFound
 from bcrypt import hashpw, gensalt, checkpw
 from db import DB
@@ -57,7 +56,7 @@ class Auth:
 
         return session_id
 
-    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
+    def get_user_from_session_id(self, session_id: str) -> User:
         """returns a session string
         """
         try:
