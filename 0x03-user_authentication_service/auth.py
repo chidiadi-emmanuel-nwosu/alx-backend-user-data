@@ -13,6 +13,11 @@ def _hash_password(password: str) -> str:
     """
     return hashpw(password.encode('utf-8'), gensalt())
 
+def _generate_uuid() -> str:
+    """Generates a token
+    """
+    return str(uuid4())
+
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -41,11 +46,6 @@ class Auth:
                            user.hashed_password)
         except NoResultFound:
             return False
-
-    def _generate_uuid(self) -> str:
-        """Generates a token
-        """
-        return str(uuid4())
 
     def create_session(self, email: str) -> str:
         """returns a session string
