@@ -53,7 +53,7 @@ def logout():
     if user:
         AUTH.destroy_session(user.id)
         redirect(url_for('index'))
-    abort(403)
+    retun (403)
 
 
 @app.route("/profile", methods=['GET'])
