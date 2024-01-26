@@ -40,7 +40,7 @@ class DB:
 
         return new_user
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Find a user in the database
         """
         try:
@@ -51,7 +51,7 @@ class DB:
         except InvalidRequestError as exc:
             raise exc
 
-    def update_user(self, user_id: int, **kwargs: dict) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Updates a user in the database
         """
         user = self.find_user_by(id=user_id)
