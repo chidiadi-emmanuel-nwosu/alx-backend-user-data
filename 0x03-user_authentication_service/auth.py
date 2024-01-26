@@ -13,6 +13,7 @@ def _hash_password(password: str) -> str:
     """
     return hashpw(password.encode('utf-8'), gensalt())
 
+
 def _generate_uuid() -> str:
     """Generates a token
     """
