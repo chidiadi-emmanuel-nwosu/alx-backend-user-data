@@ -60,12 +60,12 @@ def logout():
 def profile():
     """Get a user profile
     """
-    session_id = request.cookies.get('session_id')
-
-    user = AUTH.get_user_from_session_id(session_id)
-    if user:
+    try:
+        session_id = request.cookies.get('session_id')
+        user = AUTH.get_user_from_session_id(session_id)
         return jsonify({"email": user.email}), 200
-    abort(403)
+    except Exception:
+        abort(403)
 
 
 @app.route("/reset_password", methods=['POST'])
